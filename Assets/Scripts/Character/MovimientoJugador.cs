@@ -4,13 +4,13 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movimiento")]
-    public float speed = 5f;
+    public float speed = 8f;
 
     [Header("Salto")]
-    public float jumpForce = 8f;
+    public float jumpForce = 12f;
 
     [Header("Gravedad")]
-    public float gravity = -20f;
+    public float gravity = -9.8f;
 
 
     private CharacterController controller;
