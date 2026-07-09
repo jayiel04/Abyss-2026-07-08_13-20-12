@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        LockZAxis();
         HandleGravity();
 
         // Único Move por frame
@@ -88,6 +89,12 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
     }
+    private void LockZAxis()
+    {
+        Vector3 position = transform.position;
+        position.z = 0f;
+        transform.position = position;
+    }
 
 
     void RotatePlayer()
@@ -102,3 +109,4 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 }
+
