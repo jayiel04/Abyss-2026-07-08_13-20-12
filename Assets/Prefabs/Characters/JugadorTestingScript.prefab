@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3f0a2bc73fd7f3a45a4a57d502201c21, type: 3}
       propertyPath: m_Name
-      value: JugadorTesting
+      value: JugadorTestingScript
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a17f65a1f8fec143846b298c24a44b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 5
-  jumpForce: 8
+  speed: 6
+  jumpForce: 6
   gravity: -9.8
 --- !u!143 &3107080188489085616
 CharacterController:
