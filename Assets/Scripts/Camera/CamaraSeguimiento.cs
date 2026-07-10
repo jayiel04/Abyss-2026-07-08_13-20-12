@@ -36,6 +36,5 @@ public class CameraFollow : MonoBehaviour
             targetPosition.z = target.position.z + cameraOffset.z;
 
         TargetPosition = targetPosition;
-        Debug.Log(TargetPosition);
     }
 }
