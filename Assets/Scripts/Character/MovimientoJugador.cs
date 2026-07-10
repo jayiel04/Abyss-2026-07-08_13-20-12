@@ -16,40 +16,60 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
 
     private Vector2 moveInput;
+    private bool inputLocked = false;
     private Vector3 velocity;
 
+    // Movimiento externo (plataformas, empujes, etc.)
+    private Vector3 externalMovement;
 
-    // Datos para animaciones
+
     public float HorizontalInput { get; private set; }
     public bool IsGrounded => controller.isGrounded;
 
 
-    void Awake()
+    private void Awake()
     {
         controller = GetComponent<CharacterController>();
     }
 
 
-    void Update()
+    private void Update()
     {
         HandleMovement();
-        LockZAxis();
         HandleGravity();
 
+
+        Vector3 finalMovement = velocity * Time.deltaTime;
+
+        // Movimiento de plataforma
+        finalMovement += externalMovement;
+
+
         // Único Move por frame
-        Vector3 finalMovement = velocity;
-        controller.Move(finalMovement * Time.deltaTime);
+        controller.Move(finalMovement);
+
+
+        // Limpiar movimiento externo
+        externalMovement = Vector3.zero;
+
+
+        LockZAxis();
     }
 
 
-    // Input de movimiento
+    public void AddExternalMovement(Vector3 movement)
+    {
+       
+        externalMovement += movement;
+    }
+
+
     public void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
     }
 
 
-    // Input de salto
     public void OnJump(InputValue value)
     {
         if (value.isPressed && IsGrounded)
@@ -59,27 +79,28 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    void HandleMovement()
+    private void HandleMovement()
     {
+        if (inputLocked)
+        {
+            velocity.x = 0;
+            velocity.z = 0;
+            return;
+        }
+
+
         HorizontalInput = moveInput.x;
 
 
-        Vector3 movement = new Vector3(
-            moveInput.x * speed,
-            0,
-            0
-        );
-
-
-        velocity.x = movement.x;
-        velocity.z = movement.z;
+        velocity.x = moveInput.x * speed;
+        velocity.z = 0;
 
 
         RotatePlayer();
     }
 
 
-    void HandleGravity()
+    private void HandleGravity()
     {
         if (IsGrounded && velocity.y < 0)
         {
@@ -89,6 +110,8 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
     }
+
+
     private void LockZAxis()
     {
         Vector3 position = transform.position;
@@ -97,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    void RotatePlayer()
+    private void RotatePlayer()
     {
         if (HorizontalInput > 0)
         {
@@ -108,5 +131,15 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, -90, 0);
         }
     }
-}
+    public void LockInput(bool state)
+    {
+        inputLocked = state;
 
+        if (state)
+        {
+            moveInput = Vector2.zero;
+            velocity.x = 0;
+            velocity.z = 0;
+        }
+    }
+}

@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(Rigidbody))]
 public class NextLevelPlatform : MonoBehaviour
 {
     [Header("Movimiento")]
@@ -9,39 +10,114 @@ public class NextLevelPlatform : MonoBehaviour
     [Header("Jugador")]
     [SerializeField] private string playerTag = "Player";
 
-    private Rigidbody rb;
+    [Header("Cambio de escena")]
+    [SerializeField] private float waitTime = 5f;
+
+
     private bool activated = false;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
+    private PlayerMovement currentPlayer;
 
-        // Para moverlo por código
-        rb.isKinematic = true;
-        rb.useGravity = false;
+
+    private void Update()
+    {
+        if (!activated)
+            return;
+
+
+        Vector3 movement = Vector3.up * riseSpeed * Time.deltaTime;
+
+
+        transform.position += movement;
+
+
+        if (currentPlayer != null)
+        {
+            currentPlayer.AddExternalMovement(movement);
+        }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (activated)
             return;
 
+
         if (!other.CompareTag(playerTag))
             return;
 
+
         activated = true;
 
-        // Dispara el evento
+
+        currentPlayer = other.GetComponent<PlayerMovement>();
+
+
+        // Bloquear controles del jugador
+        if (currentPlayer != null)
+        {
+            currentPlayer.LockInput(true);
+        }
+
+
         GameEvents.InvokeGoNextLevel();
+
+
+        StartCoroutine(ChangeLevel());
+
+
         Debug.Log("Next Level Platform activated!");
     }
 
-    private void FixedUpdate()
-    {
-        if (!activated)
-            return;
 
-        Vector3 newPosition = rb.position + Vector3.up * riseSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(newPosition);
+    private IEnumerator ChangeLevel()
+    {
+        yield return new WaitForSeconds(waitTime);
+
+
+        string currentScene = SceneManager.GetActiveScene().name;
+
+
+        string nextScene = GetNextScene(currentScene);
+
+
+        if (!string.IsNullOrEmpty(nextScene))
+        {
+            SceneManager.LoadScene(nextScene);
+        }
+    }
+
+
+    private string GetNextScene(string currentScene)
+    {
+        switch (currentScene)
+        {
+            case "Capa7":
+                return "Capa6";
+
+            case "Capa6":
+                return "Capa5";
+
+            case "Capa5":
+                return "Capa4";
+
+            case "Capa4":
+                return "Capa3";
+
+            case "Capa3":
+                return "Capa2";
+
+            case "Capa2":
+                return "Capa1";
+
+            case "Capa1":
+                return "Victoria";
+
+
+            default:
+                Debug.LogWarning("No existe transición para: " + currentScene);
+                return null;
+        }
     }
 }

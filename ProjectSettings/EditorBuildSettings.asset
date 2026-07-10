@@ -6,7 +6,31 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Capa1.unity
+    guid: ad3ec95d36894a341b35469bcca0a79b
+  - enabled: 1
+    path: Assets/Scenes/Capa2.unity
+    guid: 185ccfdee752a6649b0b673c57c06d39
+  - enabled: 1
+    path: Assets/Scenes/Capa3.unity
+    guid: 17f103627a529fd47957be1d61e24404
+  - enabled: 1
+    path: Assets/Scenes/Capa4.unity
+    guid: e057f7feeae40104bb3e78396f906cb5
+  - enabled: 1
+    path: Assets/Scenes/Capa5.unity
+    guid: 9abd51bedb74aed4a8c9dc2657a979a9
+  - enabled: 1
+    path: Assets/Scenes/Capa6.unity
+    guid: c6c4eba5b798cdd48b32c2b47c44a01d
+  - enabled: 1
     path: Assets/Scenes/Capa7.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Victoria.unity
+    guid: 4ceff17cdc6b51c419bdc4d784ed6489
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 14330dc86ff5c0045936ee9aa36728de
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 1900b9b8240143c448027f43c3aca8a6, type: 3}
