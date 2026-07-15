@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Gravedad")]
     public float gravity = -9.8f;
 
+    [Header("Dash")]
+    public float dashDistance = 5f;
+    public float dashDuration = 0.2f;
+    public float dashCooldown = 0.5f;
 
     private CharacterController controller;
 
@@ -21,6 +25,12 @@ public class PlayerMovement : MonoBehaviour
 
     // Movimiento externo (plataformas, empujes, etc.)
     private Vector3 externalMovement;
+
+    // Dash
+    private bool isDashing = false;
+    private float dashTimer = 0f;
+    private float lastDashTime = -Mathf.Infinity;
+    private Vector3 dashDirection;
 
 
     public float HorizontalInput { get; private set; }
@@ -35,23 +45,32 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
-        HandleGravity();
-
+        if (isDashing)
+        {
+            HandleDash();
+        }
+        else
+        {
+            HandleMovement();
+            HandleGravity();
+        }
 
         Vector3 finalMovement = velocity * Time.deltaTime;
 
         // Movimiento de plataforma
         finalMovement += externalMovement;
 
+        // Durante el dash, usar la dirección del dash
+        if (isDashing)
+        {
+            finalMovement = dashDirection * (dashDistance / dashDuration) * Time.deltaTime;
+        }
 
-        // �nico Move por frame
+        // Único Move por frame
         controller.Move(finalMovement);
-
 
         // Limpiar movimiento externo
         externalMovement = Vector3.zero;
-
 
         LockZAxis();
     }
@@ -75,6 +94,39 @@ public class PlayerMovement : MonoBehaviour
         if (value.isPressed && IsGrounded)
         {
             velocity.y = jumpForce;
+        }
+    }
+
+    public void OnDash(InputValue value)
+    {
+        if (value.isPressed && !isDashing && Time.time >= lastDashTime + dashCooldown)
+        {
+            float horizontalInput = moveInput.x;
+            if (horizontalInput != 0)
+            {
+                StartDash(horizontalInput > 0 ? Vector3.right : Vector3.left);
+            }
+        }
+    }
+
+    private void StartDash(Vector3 direction)
+    {
+        isDashing = true;
+        dashTimer = dashDuration;
+        dashDirection = direction;
+        lastDashTime = Time.time;
+
+        // Congelar gravedad durante el dash
+        velocity.y = 0;
+    }
+
+    private void HandleDash()
+    {
+        dashTimer -= Time.deltaTime;
+
+        if (dashTimer <= 0)
+        {
+            isDashing = false;
         }
     }
 

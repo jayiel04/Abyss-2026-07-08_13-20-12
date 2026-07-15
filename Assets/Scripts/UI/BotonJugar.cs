@@ -7,4 +7,9 @@ public class BotonJugar : MonoBehaviour
     {
         SceneManager.LoadScene("Capa7");
     }
+
+    public void RegresarMenu()
+        {
+        SceneManager.LoadScene("Menu");
+    }
 }
