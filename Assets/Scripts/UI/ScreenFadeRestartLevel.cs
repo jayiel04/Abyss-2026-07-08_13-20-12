@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class ScreenFade : MonoBehaviour
+public class ScreenFadeRestartLevel : MonoBehaviour
 {
     [Header("Referencias")]
     [SerializeField] private Image fadePanel;
@@ -12,39 +13,33 @@ public class ScreenFade : MonoBehaviour
 
     private Coroutine fadeCoroutine;
 
-
-
     private void OnDisable()
     {
-        GameEvents.GoNextLevel -= StartFade;
-    }
-
-    private void Start()
-    {
-        Color color = fadePanel.color;
-        color.a = 0f;
-        fadePanel.color = color;
+        GameEvents.RestartLevel -= StartFade;
     }
 
     private void OnEnable()
     {
-        Debug.Log("ScreenFade se suscribió");
-        GameEvents.GoNextLevel += StartFade;
+        Debug.Log("ScreenFadeRestartLevel se suscribió");
+        GameEvents.RestartLevel += StartFade;
     }
 
     private void StartFade()
     {
-        Debug.Log("StartFade ejecutado");
+        Debug.Log("StartFadeRestart ejecutado");
 
         if (fadeCoroutine != null)
             StopCoroutine(fadeCoroutine);
 
+        fadePanel.gameObject.SetActive(true);
         fadeCoroutine = StartCoroutine(FadeToBlack());
     }
 
     private IEnumerator FadeToBlack()
     {
-        Color color = fadePanel.color;
+        Color color = Color.black;
+        color.a = 0f;
+        fadePanel.color = color;
         float elapsed = 0f;
 
         while (elapsed < fadeDuration)
@@ -58,5 +53,7 @@ public class ScreenFade : MonoBehaviour
 
         color.a = 1f;
         fadePanel.color = color;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
