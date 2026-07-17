@@ -66,13 +66,13 @@ public class PlayerMovement : MonoBehaviour
             finalMovement = dashDirection * (dashDistance / dashDuration) * Time.deltaTime;
         }
 
+        finalMovement.z = 0f;
+
         // Único Move por frame
         controller.Move(finalMovement);
 
         // Limpiar movimiento externo
         externalMovement = Vector3.zero;
-
-        LockZAxis();
     }
 
 
@@ -161,14 +161,6 @@ public class PlayerMovement : MonoBehaviour
 
 
         velocity.y += gravity * Time.deltaTime;
-    }
-
-
-    private void LockZAxis()
-    {
-        Vector3 position = transform.position;
-        position.z = 0f;
-        transform.position = position;
     }
 
 
