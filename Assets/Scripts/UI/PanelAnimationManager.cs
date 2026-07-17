@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PanelAnimationManager : MonoBehaviour
 {
@@ -52,7 +51,17 @@ public class PanelAnimationManager : MonoBehaviour
         RestartActiveCoroutine();
         activeCoroutine = StartCoroutine(FadeToColor(Color.black, () =>
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                PlayerMovement movement = player.GetComponent<PlayerMovement>();
+                if (movement != null)
+                {
+                    movement.TeleportTo(CheckpointManager.Instance.GetCheckpointPosition());
+                }
+            }
+
+            StartCoroutine(FadeOut());
         }));
     }
 
@@ -104,5 +113,11 @@ public class PanelAnimationManager : MonoBehaviour
         }
 
         fadePanel.color = new Color(targetColor.r, targetColor.g, targetColor.b, to);
+    }
+
+    private IEnumerator FadeOut()
+    {
+        yield return StartCoroutine(Fade(fadePanel.color, fadePanel.color.a, 0f));
+        fadePanel.gameObject.SetActive(false);
     }
 }

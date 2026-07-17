@@ -194,4 +194,14 @@ public class PlayerMovement : MonoBehaviour
             velocity.z = 0;
         }
     }
+
+    public void TeleportTo(Vector3 position)
+    {
+        controller.enabled = false;
+        transform.position = position;
+        controller.enabled = true;
+
+        velocity = Vector3.zero;
+        isDashing = false;
+    }
 }

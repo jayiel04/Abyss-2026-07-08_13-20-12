@@ -17,6 +17,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         UpdateMovementAnimation();
         UpdateJumpAnimation();
+        HandleInputLock();
     }
 
 
@@ -40,5 +41,12 @@ public class PlayerAnimation : MonoBehaviour
             "Grounded",
             movement.IsGrounded
         );
+    }
+
+    void HandleInputLock()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        bool isLocked = stateInfo.IsName("falling") || stateInfo.IsName("getting up");
+        movement.LockInput(isLocked);
     }
 }
