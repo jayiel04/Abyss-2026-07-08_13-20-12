@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float HorizontalInput { get; private set; }
     public bool IsGrounded => controller.isGrounded;
+    public float VerticalVelocity => velocity.y;
 
     private void Awake()
     {
@@ -38,12 +39,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"[Frame {Time.frameCount}] IsGrounded: {IsGrounded} | velocity.y: {velocity.y:F2} | isDashing: {isDashing} | inputLocked: {inputLocked}");
-
         UpdateDash();
         HandleMovement();
-        ApplyMovement();
         HandleGravity();
+        ApplyMovement();
     }
 
     private void UpdateDash()
@@ -79,21 +78,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDashing)
         {
-            Debug.Log("[Gravity] Saltado por dash");
             return;
         }
-
-        Debug.Log($"[Gravity] Before - IsGrounded: {IsGrounded}, velocity.y: {velocity.y:F2}");
 
         if (IsGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
-            Debug.Log("[Gravity] Reset velocity.y a -2f (en suelo)");
         }
 
         velocity.y += gravity * Time.deltaTime;
-
-        Debug.Log($"[Gravity] After - velocity.y: {velocity.y:F2}");
     }
 
     private void ApplyMovement()
@@ -104,22 +97,18 @@ public class PlayerMovement : MonoBehaviour
         {
             float dashSpeed = dashDistance / dashDuration;
             finalMovement = dashDirection * dashSpeed * Time.deltaTime;
-            Debug.Log($"[Movement] Dash activo - finalMovement: {finalMovement}");
+            finalMovement += externalMovement;
+            externalMovement = Vector3.zero;
         }
         else
         {
             finalMovement = velocity * Time.deltaTime;
             finalMovement += externalMovement;
             externalMovement = Vector3.zero;
-            Debug.Log($"[Movement] Normal - velocity: {velocity} | finalMovement antes de Z: {finalMovement}");
         }
 
         finalMovement.z = 0f;
-        Debug.Log($"[Movement] finalMovement final: {finalMovement}");
-
         controller.Move(finalMovement);
-
-        Debug.Log($"[Movement] Después de Move - IsGrounded: {IsGrounded}");
     }
 
     public void AddExternalMovement(Vector3 movement)
@@ -134,17 +123,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump(InputValue value)
     {
-        Debug.Log($"[Jump] Input received: {value.isPressed} | IsGrounded: {IsGrounded} | isDashing: {isDashing} | inputLocked: {inputLocked}");
-
-        if (value.isPressed && IsGrounded && !isDashing)
-        {
+        if (value.isPressed && IsGrounded && !isDashing && !inputLocked)
             velocity.y = jumpForce;
-            Debug.Log($"[Jump] Ejecutado! jumpForce: {jumpForce}");
-        }
-        else
-        {
-            Debug.Log($"[Jump] NO ejecutado - Razón: isPressed={value.isPressed}, IsGrounded={IsGrounded}, !isDashing={!isDashing}");
-        }
     }
 
     public void OnDash(InputValue value)
@@ -189,9 +169,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (state)
         {
-            moveInput = Vector2.zero;
             velocity.x = 0;
             velocity.z = 0;
+            HorizontalInput = 0;
         }
     }
 
