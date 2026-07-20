@@ -66,13 +66,13 @@ public class PlayerMovement : MonoBehaviour
             finalMovement = dashDirection * (dashDistance / dashDuration) * Time.deltaTime;
         }
 
+        finalMovement.z = 0f;
+
         // Único Move por frame
         controller.Move(finalMovement);
 
         // Limpiar movimiento externo
         externalMovement = Vector3.zero;
-
-        LockZAxis();
     }
 
 
@@ -164,14 +164,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void LockZAxis()
-    {
-        Vector3 position = transform.position;
-        position.z = 0f;
-        transform.position = position;
-    }
-
-
     private void RotatePlayer()
     {
         if (HorizontalInput > 0)
@@ -193,5 +185,15 @@ public class PlayerMovement : MonoBehaviour
             velocity.x = 0;
             velocity.z = 0;
         }
+    }
+
+    public void TeleportTo(Vector3 position)
+    {
+        controller.enabled = false;
+        transform.position = position;
+        controller.enabled = true;
+
+        velocity = Vector3.zero;
+        isDashing = false;
     }
 }
