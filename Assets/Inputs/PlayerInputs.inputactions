@@ -1,15 +1,15 @@
 {
-    "version": 1,
-    "name": "PlayerInputActions",
+    "version": 2,
+    "name": "PlayerInputs",
     "maps": [
         {
             "name": "Player",
-            "id": "98a973e8-c4cd-4cba-b6ee-763273c3acce",
+            "id": "e1a2b3c4-d5f6-7890-abcd-ef1234567890",
             "actions": [
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "3720198d-7c40-45cf-a1b8-f6a2d5ca6b9e",
+                    "id": "11111111-1111-1111-1111-111111111111",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -18,17 +18,17 @@
                 {
                     "name": "Jump",
                     "type": "Button",
-                    "id": "4d5531a1-8e65-439c-bc19-8d56e534ccc4",
-                    "expectedControlType": "",
+                    "id": "22222222-2222-2222-2222-222222222222",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Dash",
                     "type": "Button",
-                    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-                    "expectedControlType": "",
+                    "id": "33333333-3333-3333-3333-333333333333",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -37,7 +37,7 @@
             "bindings": [
                 {
                     "name": "2D Vector",
-                    "id": "f67711f8-d1ff-49d4-9e34-d735899199a0",
+                    "id": "aaaa1111-1111-1111-1111-111111111111",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
@@ -48,7 +48,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "16b075bc-16f8-4fda-94e5-dd6d563641ce",
+                    "id": "aaaa4444-4444-4444-4444-444444444444",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -59,7 +59,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "5c154fa6-65e5-434c-9924-c8e1edaf9b73",
+                    "id": "aaaa5555-5555-5555-5555-555555555555",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -70,18 +70,7 @@
                 },
                 {
                     "name": "",
-                    "id": "c6b3810a-a71c-4f10-99a2-ca49ba1fde87",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fdc3ff2b-8fe0-4b8a-9ae6-694edb090d4e",
+                    "id": "bbbb1111-1111-1111-1111-111111111111",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
@@ -92,7 +81,18 @@
                 },
                 {
                     "name": "",
-                    "id": "b1c2d3e4-f5a6-7890-bcde-f12345678901",
+                    "id": "bbbb2222-2222-2222-2222-222222222222",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cccc1111-1111-1111-1111-111111111111",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",

@@ -17,6 +17,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         UpdateMovementAnimation();
         UpdateJumpAnimation();
+        UpdateVerticalSpeedAnimation();
         HandleInputLock();
     }
 
@@ -40,6 +41,14 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool(
             "Grounded",
             movement.IsGrounded
+        );
+    }
+
+    void UpdateVerticalSpeedAnimation()
+    {
+        animator.SetFloat(
+            "speedY",
+            movement.VerticalVelocity
         );
     }
 

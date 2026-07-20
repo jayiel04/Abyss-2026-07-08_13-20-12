@@ -18,110 +18,38 @@ public class PlayerMovement : MonoBehaviour
     public float dashCooldown = 0.5f;
 
     private CharacterController controller;
-
     private Vector2 moveInput;
     private bool inputLocked = false;
     private Vector3 velocity;
-
-    // Movimiento externo (plataformas, empujes, etc.)
     private Vector3 externalMovement;
 
-    // Dash
-    private bool isDashing = false;
-    private float dashTimer = 0f;
+    private bool isDashing;
+    private float dashTimer;
     private float lastDashTime = -Mathf.Infinity;
     private Vector3 dashDirection;
 
-
     public float HorizontalInput { get; private set; }
     public bool IsGrounded => controller.isGrounded;
-
+    public float VerticalVelocity => velocity.y;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
     }
 
-
     private void Update()
     {
-        if (isDashing)
-        {
-            HandleDash();
-        }
-        else
-        {
-            HandleMovement();
-            HandleGravity();
-        }
-
-        Vector3 finalMovement = velocity * Time.deltaTime;
-
-        // Movimiento de plataforma
-        finalMovement += externalMovement;
-
-        // Durante el dash, usar la dirección del dash
-        if (isDashing)
-        {
-            finalMovement = dashDirection * (dashDistance / dashDuration) * Time.deltaTime;
-        }
-
-        finalMovement.z = 0f;
-
-        // Único Move por frame
-        controller.Move(finalMovement);
-
-        // Limpiar movimiento externo
-        externalMovement = Vector3.zero;
+        UpdateDash();
+        HandleMovement();
+        HandleGravity();
+        ApplyMovement();
     }
 
-
-    public void AddExternalMovement(Vector3 movement)
+    private void UpdateDash()
     {
-       
-        externalMovement += movement;
-    }
+        if (!isDashing)
+            return;
 
-
-    public void OnMove(InputValue value)
-    {
-        moveInput = value.Get<Vector2>();
-    }
-
-
-    public void OnJump(InputValue value)
-    {
-        if (value.isPressed && IsGrounded)
-        {
-            velocity.y = jumpForce;
-        }
-    }
-
-    public void OnDash(InputValue value)
-    {
-        if (value.isPressed && !isDashing && Time.time >= lastDashTime + dashCooldown)
-        {
-            float horizontalInput = moveInput.x;
-            if (horizontalInput != 0)
-            {
-                StartDash(horizontalInput > 0 ? Vector3.right : Vector3.left);
-            }
-        }
-    }
-
-    private void StartDash(Vector3 direction)
-    {
-        isDashing = true;
-        dashTimer = dashDuration;
-        dashDirection = direction;
-        lastDashTime = Time.time;
-
-        // Congelar gravedad durante el dash
-        velocity.y = 0;
-    }
-
-    private void HandleDash()
-    {
         dashTimer -= Time.deltaTime;
 
         if (dashTimer <= 0)
@@ -130,39 +58,98 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     private void HandleMovement()
     {
-        if (inputLocked)
+        if (inputLocked || isDashing)
         {
             velocity.x = 0;
             velocity.z = 0;
             return;
         }
 
-
         HorizontalInput = moveInput.x;
-
-
         velocity.x = moveInput.x * speed;
         velocity.z = 0;
-
 
         RotatePlayer();
     }
 
-
     private void HandleGravity()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         if (IsGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
 
-
         velocity.y += gravity * Time.deltaTime;
     }
 
+    private void ApplyMovement()
+    {
+        Vector3 finalMovement;
+
+        if (isDashing)
+        {
+            float dashSpeed = dashDistance / dashDuration;
+            finalMovement = dashDirection * dashSpeed * Time.deltaTime;
+            finalMovement += externalMovement;
+            externalMovement = Vector3.zero;
+        }
+        else
+        {
+            finalMovement = velocity * Time.deltaTime;
+            finalMovement += externalMovement;
+            externalMovement = Vector3.zero;
+        }
+
+        finalMovement.z = 0f;
+        controller.Move(finalMovement);
+    }
+
+    public void AddExternalMovement(Vector3 movement)
+    {
+        externalMovement += movement;
+    }
+
+    public void OnMove(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
+    }
+
+    public void OnJump(InputValue value)
+    {
+        if (value.isPressed && IsGrounded && !isDashing && !inputLocked)
+            velocity.y = jumpForce;
+    }
+
+    public void OnDash(InputValue value)
+    {
+        if (!value.isPressed || isDashing)
+            return;
+
+        if (Time.time < lastDashTime + dashCooldown)
+            return;
+
+        float horizontalInput = moveInput.x;
+        if (horizontalInput == 0)
+            return;
+
+        StartDash(horizontalInput > 0 ? Vector3.right : Vector3.left);
+    }
+
+    private void StartDash(Vector3 direction)
+    {
+        isDashing = true;
+        dashTimer = dashDuration;
+        dashDirection = direction;
+        lastDashTime = Time.time;
+        velocity.y = 0;
+    }
 
     private void RotatePlayer()
     {
@@ -175,15 +162,16 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, -90, 0);
         }
     }
+
     public void LockInput(bool state)
     {
         inputLocked = state;
 
         if (state)
         {
-            moveInput = Vector2.zero;
             velocity.x = 0;
             velocity.z = 0;
+            HorizontalInput = 0;
         }
     }
 
