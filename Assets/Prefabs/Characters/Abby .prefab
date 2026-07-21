@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4870706247329235631
+--- !u!1001 &9033087150392222736
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.65
+      value: 261
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_LocalRotation.x
@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_LocalRotation.z
@@ -42,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_Name
-      value: Abby
+      value: 'Abby '
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: caed9250360d96b489278b4875a6284f, type: 3}
       propertyPath: m_TagString
@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 9c3cb156df4b847418dfb27faf3148c8, type: 2}
+    - target: {fileID: 5866666021909216657, guid: caed9250360d96b489278b4875a6284f, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 65702495048144492, guid: caed9250360d96b489278b4875a6284f, type: 3}
@@ -76,59 +80,29 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: caed9250360d96b489278b4875a6284f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4478888829236464490}
+      addedObject: {fileID: 624184444584248868}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: caed9250360d96b489278b4875a6284f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3528596894722830521}
+      addedObject: {fileID: 779949372897050743}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: caed9250360d96b489278b4875a6284f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5691079147235444090}
+      addedObject: {fileID: 5070945740158764353}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: caed9250360d96b489278b4875a6284f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2257228992445069156}
+      addedObject: {fileID: 54119347590463445}
   m_SourcePrefab: {fileID: 100100000, guid: caed9250360d96b489278b4875a6284f, type: 3}
---- !u!1 &5717689538551807998 stripped
+--- !u!1 &8186014936167291201 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: caed9250360d96b489278b4875a6284f, type: 3}
-  m_PrefabInstance: {fileID: 4870706247329235631}
+  m_PrefabInstance: {fileID: 9033087150392222736}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4478888829236464490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5717689538551807998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 1900b9b8240143c448027f43c3aca8a6, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!143 &3528596894722830521
+--- !u!143 &624184444584248868
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5717689538551807998}
+  m_GameObject: {fileID: 8186014936167291201}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -147,33 +121,63 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &5691079147235444090
+--- !u!114 &779949372897050743
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5717689538551807998}
+  m_GameObject: {fileID: 8186014936167291201}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08317ddafa0a4fb48bb3c96b7ceb8990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
---- !u!114 &2257228992445069156
+--- !u!114 &5070945740158764353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5717689538551807998}
+  m_GameObject: {fileID: 8186014936167291201}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a17f65a1f8fec143846b298c24a44b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 8
-  jumpForce: 8
-  gravity: -9.8
+  speed: 6
+  jumpForce: 7
+  gravity: -13
   dashDistance: 3
   dashDuration: 0.2
   dashCooldown: 0.5
+--- !u!114 &54119347590463445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186014936167291201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 4ebe7b06c70fc394d9c08e8675fc5fd3, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
