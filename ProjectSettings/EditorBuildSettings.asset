@@ -32,5 +32,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 14330dc86ff5c0045936ee9aa36728de
+  - enabled: 1
+    path: Assets/Scenes/TransicionCapa7.unity
+    guid: 4bc2e6af310716541a95cdce0ae645a6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 1900b9b8240143c448027f43c3aca8a6, type: 3}

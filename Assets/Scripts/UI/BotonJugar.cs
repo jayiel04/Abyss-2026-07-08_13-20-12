@@ -5,7 +5,7 @@ public class BotonJugar : MonoBehaviour
 {
     public void IrANivel1()
     {
-        SceneManager.LoadScene("Capa7");
+        SceneManager.LoadScene("TransicionCapa7");
     }
 
     public void RegresarMenu()
