@@ -89,6 +89,9 @@ PrefabInstance:
       addedObject: {fileID: 5070945740158764353}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: caed9250360d96b489278b4875a6284f, type: 3}
       insertIndex: -1
+      addedObject: {fileID: -8192783001183494938}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: caed9250360d96b489278b4875a6284f, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 54119347590463445}
   m_SourcePrefab: {fileID: 100100000, guid: caed9250360d96b489278b4875a6284f, type: 3}
 --- !u!1 &8186014936167291201 stripped
@@ -146,11 +149,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   speed: 6
+  bloquearEjeZ: 1
   jumpForce: 7
   gravity: -13
   dashDistance: 3
   dashDuration: 0.2
   dashCooldown: 0.5
+  dashEnergyCost: 25
+--- !u!114 &-8192783001183494938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186014936167291201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4821a834cf39ccc469345c1dfbe66136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 3
+  invulnerabilityDuration: 2
+  blinkInterval: 0.1
+  restartOnDeath: 1
 --- !u!114 &54119347590463445
 MonoBehaviour:
   m_ObjectHideFlags: 0

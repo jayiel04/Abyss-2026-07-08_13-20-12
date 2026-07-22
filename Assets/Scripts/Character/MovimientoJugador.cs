@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float dashDistance = 5f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 0.5f;
+    [Min(0f)] public float dashEnergyCost = 25f;
 
     private CharacterController controller;
     private Vector2 moveInput;
@@ -144,6 +145,9 @@ public class PlayerMovement : MonoBehaviour
 
         float horizontalInput = moveInput.x;
         if (horizontalInput == 0)
+            return;
+
+        if (!GameEvents.TryConsumeDashEnergy(dashEnergyCost))
             return;
 
         StartDash(horizontalInput > 0 ? Vector3.right : Vector3.left);
