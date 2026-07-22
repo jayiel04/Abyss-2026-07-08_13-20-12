@@ -1,5 +1,5 @@
 {
-    "version": 2,
+    "version": 1,
     "name": "PlayerInputs",
     "maps": [
         {
@@ -28,7 +28,7 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "33333333-3333-3333-3333-333333333333",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -93,7 +93,7 @@
                 {
                     "name": "",
                     "id": "cccc1111-1111-1111-1111-111111111111",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/m",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

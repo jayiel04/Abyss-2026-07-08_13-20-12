@@ -6,6 +6,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movimiento")]
     public float speed = 8f;
 
+    [Tooltip("Impide que el personaje pueda desplazarse en el eje Z.")]
+    public bool bloquearEjeZ = true;
+
     [Header("Salto")]
     public float jumpForce = 12f;
 
@@ -69,7 +72,9 @@ public class PlayerMovement : MonoBehaviour
 
         HorizontalInput = moveInput.x;
         velocity.x = moveInput.x * speed;
-        velocity.z = 0;
+
+        if (bloquearEjeZ)
+            velocity.z = 0;
 
         RotatePlayer();
     }
@@ -107,7 +112,9 @@ public class PlayerMovement : MonoBehaviour
             externalMovement = Vector3.zero;
         }
 
-        finalMovement.z = 0f;
+        if (bloquearEjeZ)
+            finalMovement.z = 0f;
+
         controller.Move(finalMovement);
     }
 
