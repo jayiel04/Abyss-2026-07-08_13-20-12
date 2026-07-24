@@ -6,6 +6,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movimiento")]
     public float speed = 8f;
 
+    [Tooltip("Impide que el personaje pueda desplazarse en el eje Z.")]
+    public bool bloquearEjeZ = true;
+
     [Header("Salto")]
     public float jumpForce = 12f;
 
@@ -16,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float dashDistance = 5f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 0.5f;
+    [Min(0f)] public float dashEnergyCost = 25f;
 
     private CharacterController controller;
     private Vector2 moveInput;
@@ -35,6 +39,21 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.OnCinematic += HandleCinematic;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnCinematic -= HandleCinematic;
+    }
+
+    private void HandleCinematic(bool isStarting)
+    {
+        LockInput(isStarting);
     }
 
     private void Update()
@@ -69,7 +88,9 @@ public class PlayerMovement : MonoBehaviour
 
         HorizontalInput = moveInput.x;
         velocity.x = moveInput.x * speed;
-        velocity.z = 0;
+
+        if (bloquearEjeZ)
+            velocity.z = 0;
 
         RotatePlayer();
     }
@@ -107,7 +128,9 @@ public class PlayerMovement : MonoBehaviour
             externalMovement = Vector3.zero;
         }
 
-        finalMovement.z = 0f;
+        if (bloquearEjeZ)
+            finalMovement.z = 0f;
+
         controller.Move(finalMovement);
     }
 
@@ -137,6 +160,9 @@ public class PlayerMovement : MonoBehaviour
 
         float horizontalInput = moveInput.x;
         if (horizontalInput == 0)
+            return;
+
+        if (!GameEvents.TryConsumeDashEnergy(dashEnergyCost))
             return;
 
         StartDash(horizontalInput > 0 ? Vector3.right : Vector3.left);

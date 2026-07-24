@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class FallingRock : MonoBehaviour
 {
@@ -12,6 +11,9 @@ public class FallingRock : MonoBehaviour
 
     [Header("Destrucción")]
     [SerializeField] private float destroyAfterFall = 2f;
+
+    [Header("Daño")]
+    [SerializeField] private int damageAmount = 1;
 
     private bool hasFallen = false;
     private bool hasHitPlayer = false;
@@ -77,7 +79,14 @@ public class FallingRock : MonoBehaviour
             if (!hasHitPlayer)
             {
                 hasHitPlayer = true;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+                PlayerHealth health = collision.gameObject.GetComponent<PlayerHealth>();
+                if (health != null)
+                {
+                    health.TakeDamage(damageAmount);
+                }
+
+                Destroy(gameObject, destroyAfterFall);
             }
         }
         else
