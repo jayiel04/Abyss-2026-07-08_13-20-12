@@ -41,6 +41,21 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
     }
 
+    private void OnEnable()
+    {
+        GameEvents.OnCinematic += HandleCinematic;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnCinematic -= HandleCinematic;
+    }
+
+    private void HandleCinematic(bool isStarting)
+    {
+        LockInput(isStarting);
+    }
+
     private void Update()
     {
         UpdateDash();

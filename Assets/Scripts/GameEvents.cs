@@ -7,7 +7,7 @@ public static class GameEvents
     public static event Action RestartLevel;
     public static event Action<int> OnHealthChanged;
     public static event Action<DashEnergyRequest> DashEnergyRequested;
-
+    public static event Action<bool> OnCinematic;
     public static int MaxHealth = 3;
     public static int CurrentHealth { get; private set; }
 
@@ -42,6 +42,12 @@ public static class GameEvents
             Debug.LogWarning("No hay una barra de energia de dash activa.");
 
         return request.WasConsumed;
+    }
+
+    public static void InvokeOnCinematic(bool isStarting)
+    {
+        Debug.Log(isStarting ? "Cinematic iniciado" : "Cinematic finalizado");
+        OnCinematic?.Invoke(isStarting);
     }
 
     public static void AddHealth(int amount)

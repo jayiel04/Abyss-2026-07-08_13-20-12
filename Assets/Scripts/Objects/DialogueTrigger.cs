@@ -34,6 +34,8 @@ public class DialogueTrigger : MonoBehaviour
 
     private IEnumerator PlaySequence()
     {
+        GameEvents.InvokeOnCinematic(true);
+
         if (delayBeforeStart > 0f)
             yield return new WaitForSecondsRealtime(delayBeforeStart);
 
@@ -53,6 +55,8 @@ public class DialogueTrigger : MonoBehaviour
 
         if (delayAfterFinish > 0f)
             yield return new WaitForSecondsRealtime(delayAfterFinish);
+
+        GameEvents.InvokeOnCinematic(false);
 
         if (destroyOnComplete)
             Destroy(gameObject);
