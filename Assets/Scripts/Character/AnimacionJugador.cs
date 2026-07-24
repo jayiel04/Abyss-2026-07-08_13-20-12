@@ -15,6 +15,14 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
+        if (!movement.enabled)
+        {
+            animator.SetFloat("Speed", 0f);
+            animator.SetBool("Grounded", true);
+            animator.SetFloat("speedY", 0f);
+            return;
+        }
+
         UpdateMovementAnimation();
         UpdateJumpAnimation();
         UpdateVerticalSpeedAnimation();
