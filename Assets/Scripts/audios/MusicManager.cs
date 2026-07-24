@@ -7,7 +7,7 @@ public class MusicManager : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void AutoInitialize()
     {
-        if (FindObjectOfType<MusicManager>() == null)
+        if (FindAnyObjectByType<MusicManager>() == null)
         {
             GameObject go = new GameObject("MusicManager");
             go.AddComponent<MusicManager>();

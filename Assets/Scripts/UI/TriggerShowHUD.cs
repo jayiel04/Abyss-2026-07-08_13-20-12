@@ -13,7 +13,7 @@ public class TriggerShowHUD : MonoBehaviour
 
     private void Start()
     {
-        hud = FindObjectOfType<GameHUD>();
+        hud = FindAnyObjectByType<GameHUD>();
 
         if (hideOnStart && hud != null)
         {
