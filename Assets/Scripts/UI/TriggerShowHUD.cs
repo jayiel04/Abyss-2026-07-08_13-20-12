@@ -8,18 +8,7 @@ public class TriggerShowHUD : MonoBehaviour
     [Header("Estado inicial")]
     [SerializeField] private bool hideOnStart = true;
 
-    private GameHUD hud;
     private bool triggered = false;
-
-    private void Start()
-    {
-        hud = FindAnyObjectByType<GameHUD>();
-
-        if (hideOnStart && hud != null)
-        {
-            hud.Hide();
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,10 +16,7 @@ public class TriggerShowHUD : MonoBehaviour
 
         if (!other.CompareTag(playerTag)) return;
 
-        if (hud != null)
-        {
-            triggered = true;
-            hud.FadeIn();
-        }
+        triggered = true;
+        GameEvents.InvokeOnHUDShowRequested();
     }
 }

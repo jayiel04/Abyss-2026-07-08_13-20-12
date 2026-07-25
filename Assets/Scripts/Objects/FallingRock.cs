@@ -80,11 +80,7 @@ public class FallingRock : MonoBehaviour
             {
                 hasHitPlayer = true;
 
-                PlayerHealth health = collision.gameObject.GetComponent<PlayerHealth>();
-                if (health != null)
-                {
-                    health.TakeDamage(damageAmount);
-                }
+                GameEvents.InvokeOnPlayerDamaged(damageAmount);
 
                 Destroy(gameObject, destroyAfterFall);
             }

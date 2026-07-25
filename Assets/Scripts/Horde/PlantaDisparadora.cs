@@ -50,17 +50,6 @@ public class PlantaDisparadora : MonoBehaviour
 
     private void Start()
     {
-        if (jugador == null)
-        {
-            GameObject objetoJugador =
-                GameObject.FindGameObjectWithTag("Player");
-
-            if (objetoJugador != null)
-            {
-                jugador = objetoJugador.transform;
-            }
-        }
-
         if (parteQueGira == null)
         {
             parteQueGira = transform;

@@ -14,7 +14,6 @@ public class DemoPlatform : MonoBehaviour
     [SerializeField] private string sceneName = "Demo";
 
     private bool activated = false;
-    private PlayerMovement currentPlayer;
 
     private void Update()
     {
@@ -23,11 +22,7 @@ public class DemoPlatform : MonoBehaviour
 
         Vector3 movement = Vector3.up * riseSpeed * Time.deltaTime;
         transform.position += movement;
-
-        if (currentPlayer != null)
-        {
-            currentPlayer.AddExternalMovement(movement);
-        }
+        GameEvents.InvokeOnPlayerExternalMovement(movement);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -39,16 +34,9 @@ public class DemoPlatform : MonoBehaviour
             return;
 
         activated = true;
-        currentPlayer = other.GetComponent<PlayerMovement>();
-
-        if (currentPlayer != null)
-        {
-            currentPlayer.LockInput(true);
-        }
-
+        GameEvents.InvokeOnPlayerInputLock(true);
         GameEvents.InvokeGoNextLevel();
         SceneManager.LoadScene(sceneName);
-
         Debug.Log("Demo Platform activated! Loading scene: " + sceneName);
     }
 }

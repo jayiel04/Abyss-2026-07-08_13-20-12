@@ -122,12 +122,7 @@ public class ProyectilPlanta : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            PlayerHealth health = other.GetComponent<PlayerHealth>();
-            if (health != null)
-            {
-                health.TakeDamage(dano);
-            }
-
+            GameEvents.InvokeOnPlayerDamaged(dano);
             DestruirProyectil();
             return;
         }

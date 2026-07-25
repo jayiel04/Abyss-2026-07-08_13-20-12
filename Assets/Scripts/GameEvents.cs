@@ -8,6 +8,12 @@ public static class GameEvents
     public static event Action<int> OnHealthChanged;
     public static event Action<DashEnergyRequest> DashEnergyRequested;
     public static event Action<bool> OnCinematic;
+    public static event Action<int> OnPlayerDamaged;
+    public static event Action<bool> OnPlayerInputLock;
+    public static event Action<Vector3> OnPlayerExternalMovement;
+    public static event Action OnHUDShowRequested;
+    public static event Action<float, bool> OnPlayerMovementState;
+    public static event Action<Vector3> OnPlayerTeleport;
     public static int MaxHealth = 3;
     public static int CurrentHealth { get; private set; }
 
@@ -28,6 +34,36 @@ public static class GameEvents
         Debug.Log("RestartLevel invocado");
 
         RestartLevel?.Invoke();
+    }
+
+    public static void InvokeOnPlayerDamaged(int amount)
+    {
+        OnPlayerDamaged?.Invoke(amount);
+    }
+
+    public static void InvokeOnPlayerInputLock(bool locked)
+    {
+        OnPlayerInputLock?.Invoke(locked);
+    }
+
+    public static void InvokeOnPlayerExternalMovement(Vector3 movement)
+    {
+        OnPlayerExternalMovement?.Invoke(movement);
+    }
+
+    public static void InvokeOnHUDShowRequested()
+    {
+        OnHUDShowRequested?.Invoke();
+    }
+
+    public static void InvokeOnPlayerMovementState(float horizontalInput, bool isGrounded)
+    {
+        OnPlayerMovementState?.Invoke(horizontalInput, isGrounded);
+    }
+
+    public static void InvokeOnPlayerTeleport(Vector3 position)
+    {
+        OnPlayerTeleport?.Invoke(position);
     }
 
     public static bool TryConsumeDashEnergy(float amount)

@@ -50,11 +50,18 @@ public class PlayerHealth : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.RestartLevel += HandleRestartLevel;
+        GameEvents.OnPlayerDamaged += HandlePlayerDamaged;
     }
 
     private void OnDisable()
     {
         GameEvents.RestartLevel -= HandleRestartLevel;
+        GameEvents.OnPlayerDamaged -= HandlePlayerDamaged;
+    }
+
+    private void HandlePlayerDamaged(int amount)
+    {
+        TakeDamage(amount);
     }
 
     private void HandleRestartLevel()

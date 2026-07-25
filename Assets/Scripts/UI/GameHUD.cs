@@ -37,12 +37,14 @@ public class GameHUD : MonoBehaviour
     {
         GameEvents.GoNextLevel += OnGoNextLevel;
         GameEvents.RestartLevel += OnRestartLevel;
+        GameEvents.OnHUDShowRequested += FadeIn;
     }
 
     private void OnDisable()
     {
         GameEvents.GoNextLevel -= OnGoNextLevel;
         GameEvents.RestartLevel -= OnRestartLevel;
+        GameEvents.OnHUDShowRequested -= FadeIn;
     }
 
     private void OnGoNextLevel()

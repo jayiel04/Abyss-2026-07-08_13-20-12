@@ -44,16 +44,37 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.OnCinematic += HandleCinematic;
+        GameEvents.OnPlayerInputLock += HandleInputLock;
+        GameEvents.OnPlayerExternalMovement += HandleExternalMovement;
+        GameEvents.OnPlayerTeleport += HandleTeleport;
     }
 
     private void OnDisable()
     {
         GameEvents.OnCinematic -= HandleCinematic;
+        GameEvents.OnPlayerInputLock -= HandleInputLock;
+        GameEvents.OnPlayerExternalMovement -= HandleExternalMovement;
+        GameEvents.OnPlayerTeleport -= HandleTeleport;
     }
 
     private void HandleCinematic(bool isStarting)
     {
         LockInput(isStarting);
+    }
+
+    private void HandleInputLock(bool locked)
+    {
+        LockInput(locked);
+    }
+
+    private void HandleExternalMovement(Vector3 movement)
+    {
+        externalMovement += movement;
+    }
+
+    private void HandleTeleport(Vector3 position)
+    {
+        TeleportTo(position);
     }
 
     private void Update()
@@ -62,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
         HandleGravity();
         ApplyMovement();
+        GameEvents.InvokeOnPlayerMovementState(HorizontalInput, IsGrounded);
     }
 
     private void UpdateDash()

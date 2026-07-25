@@ -51,16 +51,7 @@ public class PanelAnimationManager : MonoBehaviour
         RestartActiveCoroutine();
         activeCoroutine = StartCoroutine(FadeToColor(Color.black, () =>
         {
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                PlayerMovement movement = player.GetComponent<PlayerMovement>();
-                if (movement != null)
-                {
-                    movement.TeleportTo(CheckpointManager.Instance.GetCheckpointPosition());
-                }
-            }
-
+            GameEvents.InvokeOnPlayerTeleport(CheckpointManager.Instance.GetCheckpointPosition());
             StartCoroutine(FadeOut());
         }));
     }

@@ -14,7 +14,7 @@ public class MovingPlatform : MonoBehaviour
     private Vector3 lastPosition;
     private Vector3 deltaMovement;
 
-    private PlayerMovement player;
+    private bool playerOnPlatform = false;
 
     private void Start()
     {
@@ -45,26 +45,26 @@ public class MovingPlatform : MonoBehaviour
         deltaMovement = transform.position - lastPosition;
         lastPosition = transform.position;
 
-        // Arrastrar al jugador
-        if (player != null && player.IsGrounded)
+        // Arrastrar al jugador si está en la plataforma
+        if (playerOnPlatform)
         {
-            player.AddExternalMovement(deltaMovement);
+            GameEvents.InvokeOnPlayerExternalMovement(deltaMovement);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out PlayerMovement p))
+        if (other.TryGetComponent(out PlayerMovement _))
         {
-            player = p;
+            playerOnPlatform = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out PlayerMovement p) && p == player)
+        if (other.TryGetComponent(out PlayerMovement _))
         {
-            player = null;
+            playerOnPlatform = false;
         }
     }
 }

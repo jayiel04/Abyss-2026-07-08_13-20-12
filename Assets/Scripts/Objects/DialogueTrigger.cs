@@ -23,7 +23,6 @@ public class DialogueTrigger : MonoBehaviour
 
     private AudioSource audioSource;
     private bool triggered;
-    private PlayerMovement playerMovement;
 
     private void Awake()
     {
@@ -36,15 +35,12 @@ public class DialogueTrigger : MonoBehaviour
         if (!other.CompareTag(playerTag)) return;
 
         triggered = true;
-        playerMovement = other.GetComponent<PlayerMovement>();
         StartCoroutine(PlaySequence());
     }
 
     private IEnumerator PlaySequence()
     {
-        if (playerMovement != null)
-            playerMovement.enabled = false;
-
+        GameEvents.InvokeOnPlayerInputLock(true);
         GameEvents.InvokeOnCinematic(true);
 
         if (delayBeforeStart > 0f)
@@ -77,9 +73,7 @@ public class DialogueTrigger : MonoBehaviour
         }
 
         GameEvents.InvokeOnCinematic(false);
-
-        if (playerMovement != null)
-            playerMovement.enabled = true;
+        GameEvents.InvokeOnPlayerInputLock(false);
 
         if (destroyOnComplete)
             Destroy(gameObject);

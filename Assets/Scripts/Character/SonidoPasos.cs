@@ -3,20 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SonidoPasos : MonoBehaviour
 {
-    [Header("Referencias")]
-    [SerializeField] private PlayerMovement playerMovement;
-
     [Header("Audio")]
     [SerializeField] private AudioClip clipPasos;
 
     private AudioSource audioSource;
+    private float currentHorizontalInput;
+    private bool currentIsGrounded;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-
-        if (playerMovement == null)
-            playerMovement = GetComponent<PlayerMovement>();
 
         if (audioSource != null && clipPasos != null)
         {
@@ -26,15 +22,28 @@ public class SonidoPasos : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        GameEvents.OnPlayerMovementState += HandleMovementState;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnPlayerMovementState -= HandleMovementState;
+    }
+
+    private void HandleMovementState(float horizontalInput, bool isGrounded)
+    {
+        currentHorizontalInput = horizontalInput;
+        currentIsGrounded = isGrounded;
+    }
+
     private void Update()
     {
         if (clipPasos == null || audioSource == null)
             return;
 
-        bool deberiaSonar =
-            playerMovement != null &&
-            Mathf.Abs(playerMovement.HorizontalInput) > 0.01f &&
-            playerMovement.IsGrounded;
+        bool deberiaSonar = Mathf.Abs(currentHorizontalInput) > 0.01f && currentIsGrounded;
 
         if (deberiaSonar && !audioSource.isPlaying)
             audioSource.Play();

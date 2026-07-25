@@ -43,20 +43,9 @@ public class DamageDealer : MonoBehaviour
         // Verifica que el objeto tenga el tag del jugador
         if (!target.CompareTag(playerTag)) return;
 
-        // Busca el componente PlayerHealth en el objeto
-        PlayerHealth health = target.GetComponent<PlayerHealth>();
-
-        if (health != null)
-        {
-            // Aplica el daño
-            health.TakeDamage(damageAmount);
-            Debug.Log($"[DamageDealer] Aplicado {damageAmount} de daño al jugador");
-        }
-        else
-        {
-            // Si no tiene PlayerHealth, avisa en consola
-            Debug.LogWarning($"[DamageDealer] El jugador '{target.name}' no tiene componente PlayerHealth");
-        }
+        // Notifica al sistema de eventos global
+        GameEvents.InvokeOnPlayerDamaged(damageAmount);
+        Debug.Log($"[DamageDealer] Aplicado {damageAmount} de daño al jugador");
 
         // Si está configurado, destruye este objeto al impactar
         if (destroyOnHit)

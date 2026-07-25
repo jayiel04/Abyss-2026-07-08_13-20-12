@@ -3,67 +3,68 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator animator;
-    private PlayerMovement movement;
-
+    private float horizontalInput;
+    private bool isGrounded;
+    private float verticalVelocity;
+    private bool isCinematic;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
-        movement = GetComponent<PlayerMovement>();
     }
 
+    private void OnEnable()
+    {
+        GameEvents.OnPlayerMovementState += HandleMovementState;
+        GameEvents.OnCinematic += HandleCinematic;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnPlayerMovementState -= HandleMovementState;
+        GameEvents.OnCinematic -= HandleCinematic;
+    }
+
+    private void HandleMovementState(float horizontalInput, bool isGrounded)
+    {
+        this.horizontalInput = horizontalInput;
+        this.isGrounded = isGrounded;
+    }
+
+    private void HandleCinematic(bool isStarting)
+    {
+        isCinematic = isStarting;
+    }
 
     void Update()
     {
-        if (!movement.enabled)
-        {
-            animator.SetFloat("Speed", 0f);
-            animator.SetBool("Grounded", true);
-            animator.SetFloat("speedY", 0f);
-            return;
-        }
-
         UpdateMovementAnimation();
         UpdateJumpAnimation();
         UpdateVerticalSpeedAnimation();
-        HandleInputLock();
+        if (!isCinematic)
+            HandleInputLock();
     }
-
 
     void UpdateMovementAnimation()
     {
-        float speed = Mathf.Abs(
-            movement.HorizontalInput
-        );
-
-
-        animator.SetFloat(
-            "Speed",
-            speed
-        );
+        float speed = Mathf.Abs(horizontalInput);
+        animator.SetFloat("Speed", speed);
     }
-
 
     void UpdateJumpAnimation()
     {
-        animator.SetBool(
-            "Grounded",
-            movement.IsGrounded
-        );
+        animator.SetBool("Grounded", isGrounded);
     }
 
     void UpdateVerticalSpeedAnimation()
     {
-        animator.SetFloat(
-            "speedY",
-            movement.VerticalVelocity
-        );
+        animator.SetFloat("speedY", verticalVelocity);
     }
 
     void HandleInputLock()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         bool isLocked = stateInfo.IsName("falling") || stateInfo.IsName("getting up");
-        movement.LockInput(isLocked);
+        GameEvents.InvokeOnPlayerInputLock(isLocked);
     }
 }

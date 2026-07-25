@@ -16,25 +16,14 @@ public class NextLevelPlatform : MonoBehaviour
 
     private bool activated = false;
 
-    private PlayerMovement currentPlayer;
-
-
     private void Update()
     {
         if (!activated)
             return;
 
-
         Vector3 movement = Vector3.up * riseSpeed * Time.deltaTime;
-
-
         transform.position += movement;
-
-
-        if (currentPlayer != null)
-        {
-            currentPlayer.AddExternalMovement(movement);
-        }
+        GameEvents.InvokeOnPlayerExternalMovement(movement);
     }
 
 
@@ -43,30 +32,13 @@ public class NextLevelPlatform : MonoBehaviour
         if (activated)
             return;
 
-
         if (!other.CompareTag(playerTag))
             return;
 
-
         activated = true;
-
-
-        currentPlayer = other.GetComponent<PlayerMovement>();
-
-
-        // Bloquear controles del jugador
-        if (currentPlayer != null)
-        {
-            currentPlayer.LockInput(true);
-        }
-
-
+        GameEvents.InvokeOnPlayerInputLock(true);
         GameEvents.InvokeGoNextLevel();
-
-
         StartCoroutine(ChangeLevel());
-
-
         Debug.Log("Next Level Platform activated!");
     }
 
