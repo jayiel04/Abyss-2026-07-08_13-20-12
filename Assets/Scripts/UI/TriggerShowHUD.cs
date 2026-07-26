@@ -5,9 +5,6 @@ public class TriggerShowHUD : MonoBehaviour
     [Header("Configuración")]
     [SerializeField] private string playerTag = "Player";
 
-    [Header("Estado inicial")]
-    [SerializeField] private bool hideOnStart = true;
-
     private bool triggered = false;
 
     private void OnTriggerEnter(Collider other)

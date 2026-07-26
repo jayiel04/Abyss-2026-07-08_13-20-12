@@ -9,7 +9,7 @@ public class DeathZone : MonoBehaviour
     {
         if (other.CompareTag(playerTag))
         {
-            GameEvents.InvokeRestartLevel();
+            GameEvents.InvokeReturnCheckpoint();
         }
     }
 }

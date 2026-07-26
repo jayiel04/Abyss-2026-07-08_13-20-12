@@ -4,7 +4,7 @@ using UnityEngine;
 public static class GameEvents
 {
     public static event Action GoNextLevel;
-    public static event Action RestartLevel;
+    public static event Action ReturnCheckpoint;
     public static event Action<int> OnHealthChanged;
     public static event Action<DashEnergyRequest> DashEnergyRequested;
     public static event Action<bool> OnCinematic;
@@ -29,11 +29,11 @@ public static class GameEvents
         GoNextLevel?.Invoke();
     }
 
-    public static void InvokeRestartLevel()
+    public static void InvokeReturnCheckpoint()
     {
-        Debug.Log("RestartLevel invocado");
+        Debug.Log("ReturnCheckpoint invocado");
 
-        RestartLevel?.Invoke();
+        ReturnCheckpoint?.Invoke();
     }
 
     public static void InvokeOnPlayerDamaged(int amount)

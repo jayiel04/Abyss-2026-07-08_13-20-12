@@ -16,13 +16,13 @@ public class PanelAnimationManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.GoNextLevel += OnGoNextLevel;
-        GameEvents.RestartLevel += OnRestartLevel;
+        GameEvents.ReturnCheckpoint += OnReturnCheckpoint;
     }
 
     private void OnDisable()
     {
         GameEvents.GoNextLevel -= OnGoNextLevel;
-        GameEvents.RestartLevel -= OnRestartLevel;
+        GameEvents.ReturnCheckpoint -= OnReturnCheckpoint;
     }
 
     private void Start()
@@ -46,7 +46,7 @@ public class PanelAnimationManager : MonoBehaviour
         activeCoroutine = StartCoroutine(FadeToColor(Color.white));
     }
 
-    private void OnRestartLevel()
+    private void OnReturnCheckpoint()
     {
         RestartActiveCoroutine();
         activeCoroutine = StartCoroutine(FadeToColor(Color.black, () =>

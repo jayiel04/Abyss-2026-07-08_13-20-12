@@ -49,13 +49,13 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEvents.RestartLevel += HandleRestartLevel;
+        GameEvents.ReturnCheckpoint += HandleReturnCheckpoint;
         GameEvents.OnPlayerDamaged += HandlePlayerDamaged;
     }
 
     private void OnDisable()
     {
-        GameEvents.RestartLevel -= HandleRestartLevel;
+        GameEvents.ReturnCheckpoint -= HandleReturnCheckpoint;
         GameEvents.OnPlayerDamaged -= HandlePlayerDamaged;
     }
 
@@ -64,7 +64,7 @@ public class PlayerHealth : MonoBehaviour
         TakeDamage(amount);
     }
 
-    private void HandleRestartLevel()
+    private void HandleReturnCheckpoint()
     {
         currentHealth = maxHealth;
         isInvulnerable = false;
@@ -169,7 +169,7 @@ public class PlayerHealth : MonoBehaviour
         // Si está activado, reinicia el nivel
         if (restartOnDeath)
         {
-            GameEvents.InvokeRestartLevel();
+            GameEvents.InvokeReturnCheckpoint();
         }
     }
 }

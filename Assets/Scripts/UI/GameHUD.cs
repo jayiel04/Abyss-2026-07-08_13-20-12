@@ -36,14 +36,14 @@ public class GameHUD : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.GoNextLevel += OnGoNextLevel;
-        GameEvents.RestartLevel += OnRestartLevel;
+        GameEvents.ReturnCheckpoint += OnReturnCheckpoint;
         GameEvents.OnHUDShowRequested += FadeIn;
     }
 
     private void OnDisable()
     {
         GameEvents.GoNextLevel -= OnGoNextLevel;
-        GameEvents.RestartLevel -= OnRestartLevel;
+        GameEvents.ReturnCheckpoint -= OnReturnCheckpoint;
         GameEvents.OnHUDShowRequested -= FadeIn;
     }
 
@@ -52,7 +52,7 @@ public class GameHUD : MonoBehaviour
         Hide();
     }
 
-    private void OnRestartLevel()
+    private void OnReturnCheckpoint()
     {
         Hide();
         StartCoroutine(ShowDelayed(1f));

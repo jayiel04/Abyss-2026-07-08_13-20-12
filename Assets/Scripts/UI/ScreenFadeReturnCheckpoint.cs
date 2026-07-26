@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class ScreenFadeRestartLevel : MonoBehaviour
+public class ScreenFadeReturnCheckpoint : MonoBehaviour
 {
     [Header("Referencias")]
     [SerializeField] private Image fadePanel;
@@ -15,13 +15,13 @@ public class ScreenFadeRestartLevel : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.RestartLevel -= StartFade;
+        GameEvents.ReturnCheckpoint -= StartFade;
     }
 
     private void OnEnable()
     {
-        Debug.Log("ScreenFadeRestartLevel se suscribió");
-        GameEvents.RestartLevel += StartFade;
+        Debug.Log("ScreenFadeReturnCheckpoint se suscribió");
+        GameEvents.ReturnCheckpoint += StartFade;
     }
 
     private void StartFade()
