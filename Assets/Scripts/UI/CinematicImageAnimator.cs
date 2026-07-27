@@ -62,6 +62,9 @@ public class CinematicImageAnimator : MonoBehaviour
     [SerializeField] private bool hideWhenFinished = true;
     [SerializeField] private bool preserveAspect = true;
 
+    [Header("Depuracion")]
+    [SerializeField] private bool debugFadeTiming;
+
     private RectTransform imageRectTransform;
     private Vector2 baseAnchoredPosition;
     private Vector3 baseScale;
@@ -178,6 +181,13 @@ public class CinematicImageAnimator : MonoBehaviour
         ShotStarted?.Invoke(shotIndex);
 
         float elapsed = 0f;
+        double shotStartRealTime = Time.realtimeSinceStartupAsDouble;
+        double fadeOutStartRealTime = 0d;
+        bool fadeInCompleted = shot.FadeInDuration <= 0f;
+        bool fadeOutStarted = shot.FadeOutDuration <= 0f;
+
+        LogFadeConfiguration(shotIndex, duration, shot);
+
         while (elapsed < duration)
         {
             float progress = Mathf.Clamp01(elapsed / duration);
@@ -191,6 +201,23 @@ public class CinematicImageAnimator : MonoBehaviour
                 Mathf.LerpUnclamped(startZoom, endZoom, curvedProgress);
             canvasGroup.alpha = CalculateAlpha(elapsed, duration, shot);
 
+            if (!fadeInCompleted && elapsed >= shot.FadeInDuration)
+            {
+                fadeInCompleted = true;
+                LogFadeCompleted(
+                    shotIndex,
+                    "Fade In",
+                    shot.FadeInDuration,
+                    shotStartRealTime);
+            }
+
+            if (!fadeOutStarted && elapsed >= duration - shot.FadeOutDuration)
+            {
+                fadeOutStarted = true;
+                fadeOutStartRealTime = Time.realtimeSinceStartupAsDouble;
+                LogFadeStarted(shotIndex, "Fade Out", shot.FadeOutDuration);
+            }
+
             elapsed += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
             yield return null;
         }
@@ -198,6 +225,21 @@ public class CinematicImageAnimator : MonoBehaviour
         imageRectTransform.anchoredPosition = baseAnchoredPosition + endOffset;
         imageRectTransform.localScale = baseScale * endZoom;
         canvasGroup.alpha = shot.FadeOutDuration > 0f ? 0f : 1f;
+
+        if (!fadeInCompleted)
+            LogFadeCompleted(shotIndex, "Fade In", shot.FadeInDuration, shotStartRealTime);
+
+        if (shot.FadeOutDuration > 0f)
+        {
+            if (!fadeOutStarted)
+                fadeOutStartRealTime = shotStartRealTime;
+
+            LogFadeCompleted(
+                shotIndex,
+                "Fade Out",
+                shot.FadeOutDuration,
+                fadeOutStartRealTime);
+        }
     }
 
     private void GetMovementPositions(
@@ -272,6 +314,55 @@ public class CinematicImageAnimator : MonoBehaviour
             : 1f;
 
         return Mathf.Clamp01(Mathf.Min(fadeInAlpha, fadeOutAlpha));
+    }
+
+    private void LogFadeConfiguration(
+        int shotIndex,
+        float duration,
+        CinematicShot shot)
+    {
+        if (!debugFadeTiming)
+            return;
+
+        Debug.Log(
+            $"[CinematicImageAnimator] Plano {shotIndex}: duracion={duration:F3}s, " +
+            $"Fade In={shot.FadeInDuration:F3}s, Fade Out={shot.FadeOutDuration:F3}s.",
+            this);
+
+        if (shot.FadeInDuration + shot.FadeOutDuration > duration)
+        {
+            Debug.LogWarning(
+                $"[CinematicImageAnimator] Plano {shotIndex}: los fundidos se solapan " +
+                "porque su suma supera la duracion del plano.",
+                this);
+        }
+    }
+
+    private void LogFadeStarted(int shotIndex, string fadeName, float configuredDuration)
+    {
+        if (!debugFadeTiming)
+            return;
+
+        Debug.Log(
+            $"[CinematicImageAnimator] Plano {shotIndex}: {fadeName} iniciado " +
+            $"(duracion configurada: {configuredDuration:F3}s).",
+            this);
+    }
+
+    private void LogFadeCompleted(
+        int shotIndex,
+        string fadeName,
+        float configuredDuration,
+        double startRealTime)
+    {
+        if (!debugFadeTiming)
+            return;
+
+        double measuredDuration = Time.realtimeSinceStartupAsDouble - startRealTime;
+        Debug.Log(
+            $"[CinematicImageAnimator] Plano {shotIndex}: {fadeName} finalizado. " +
+            $"Configurado={configuredDuration:F3}s, medido={measuredDuration:F3}s.",
+            this);
     }
 
     private bool CanPlay()
