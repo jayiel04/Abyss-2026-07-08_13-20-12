@@ -8,6 +8,8 @@ public static class GameEvents
     public static event Action<int> OnHealthChanged;
     public static event Action<DashEnergyRequest> DashEnergyRequested;
     public static event Action<bool> OnCinematic;
+    public static event Action<DialogueTrigger> DialogueStarted;
+    public static event Action<DialogueTrigger> DialogueFinished;
     public static event Action<int> OnPlayerDamaged;
     public static event Action<bool> OnPlayerInputLock;
     public static event Action<Vector3> OnPlayerExternalMovement;
@@ -84,6 +86,16 @@ public static class GameEvents
     {
         Debug.Log(isStarting ? "Cinematic iniciado" : "Cinematic finalizado");
         OnCinematic?.Invoke(isStarting);
+    }
+
+    public static void InvokeDialogueStarted(DialogueTrigger source)
+    {
+        DialogueStarted?.Invoke(source);
+    }
+
+    public static void InvokeDialogueFinished(DialogueTrigger source)
+    {
+        DialogueFinished?.Invoke(source);
     }
 
     public static void AddHealth(int amount)

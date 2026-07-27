@@ -481,7 +481,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerShowHUD
   playerTag: Player
-  hideOnStart: 1
 --- !u!65 &179298598
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1430,7 +1429,10 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: -8700617353114198275, guid: 93be5265ee3be914fa92e328c8b87619, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 93be5265ee3be914fa92e328c8b87619, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1786752508}
   m_SourcePrefab: {fileID: 100100000, guid: 93be5265ee3be914fa92e328c8b87619, type: 3}
 --- !u!1 &922965780
 GameObject:
@@ -2206,9 +2208,6 @@ MonoBehaviour:
   delayBetweenClips: 0.5
   delayAfterFinish: 0
   destroyOnComplete: 1
-  npcToHide: {fileID: 1786752505}
-  fadePanel: {fileID: 1806423102}
-  fadeDuration: 1.5
 --- !u!82 &1248319153
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2838,7 +2837,7 @@ Transform:
   m_GameObject: {fileID: 1476900046}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.62, y: -0.44794, z: -7.12562}
+  m_LocalPosition: {x: -7.5, y: -0.44794, z: -7.12562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3172,17 +3171,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8849926872826070011, guid: a99787032dba9d04b91c834e746cc60e, type: 3}
   m_PrefabInstance: {fileID: 5690232064023516059}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1717654117 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5070945740158764353, guid: a99787032dba9d04b91c834e746cc60e, type: 3}
-  m_PrefabInstance: {fileID: 5690232064023516059}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372950599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a17f65a1f8fec143846b298c24a44b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
 --- !u!82 &1717654121
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3292,7 +3280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b16c5e528fbf147901c4951888930e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SonidoPasos
-  playerMovement: {fileID: 1717654117}
   clipPasos: {fileID: 8300000, guid: 9f440ef94aedf324d9ea04ee6e2d4198, type: 3}
 --- !u!1001 &1766302087
 PrefabInstance:
@@ -3418,6 +3405,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93be5265ee3be914fa92e328c8b87619, type: 3}
   m_PrefabInstance: {fileID: 883823849}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1786752508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786752505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e081d9f3fbcef40b9288bef1a00c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcDisappearAfterDialogue
+  dialogueTrigger: {fileID: 1248319152}
+  npcToHide: {fileID: 1786752505}
+  fadePanel: {fileID: 1806423102}
+  fadeInDuration: 1
+  fadeOutDuration: 1
+  useUnscaledTime: 1
 --- !u!114 &1806423102 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2525820080401395111, guid: 07d04f92dbc158d448da9d75ea869e45, type: 3}
